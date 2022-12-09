@@ -1,0 +1,3 @@
+- [ ] add button that can be pressed and will eventually add stopwatches to the board
+- [ ] setup redux in project
+- [ ] make button create a stopwatch, but one that doesn't yet update

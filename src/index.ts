@@ -32,10 +32,10 @@ const createWindow = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-	// let extensionName = await electronDevtoolsInstaller(REACT_DEVELOPER_TOOLS);
-	// console.log(`Added Extension:  ${extensionName}`);
-	// Redux extension also has some bug where after a hot reload the redux panel says "No store found".
-	const extensionName = await electronDevtoolsInstaller(REDUX_DEVTOOLS);
+	let extensionName = await electronDevtoolsInstaller(REACT_DEVELOPER_TOOLS);
+	console.log(`Added Extension:  ${extensionName}`);
+	// There's a bug involving the Redux extension where after a hot reload the redux panel says "No store found".
+	extensionName = await electronDevtoolsInstaller(REDUX_DEVTOOLS);
 	console.log(`Added Extension:  ${extensionName}`);
 	createWindow();
 });

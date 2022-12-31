@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import stopwatches from "../features/stopwatch/stopwatchesSlice";
+import stopwatches from "features/stopwatch/stopwatchesSlice";
 
 export const store = configureStore({
 	reducer: {

@@ -1,3 +1,5 @@
 - [x] add button that can be pressed and will eventually add stopwatches to the board (@done 2022-12-10)
-- [ ] setup redux in project
-- [ ] make button create a stopwatch, but one that doesn't yet update
+- [x] setup redux in project (@done 2022-12-11)
+- [x] make button create a stopwatch (@done 2022-12-11)
+- [ ] make button to delete stopwatch
+- [ ] fill out stopwatch

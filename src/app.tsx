@@ -24,12 +24,12 @@ function App() {
 		<Fragment>
 			<h1>Turbo Timers</h1>
 			{stopwatchComponents}
-			<StopwatchButton />
+			<CreateStopwatchButton />
 		</Fragment>
 	);
 }
 
-function StopwatchButton() {
+function CreateStopwatchButton() {
 	const dispatch = useAppDispatch();
 	const onClick = () => {
 		dispatch(addStopwatch());

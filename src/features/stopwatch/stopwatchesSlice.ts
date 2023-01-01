@@ -1,6 +1,7 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "app/store";
-import {  createWidget, Widget, WidgetKind } from "features/widget/widget";
+import {createWidget, Widget, WidgetKind} from "features/widget/widget";
+import remove from 'lodash/remove';
 
 type Stopwatch = Widget & {
 	kind: WidgetKind.Stopwatch;
@@ -21,10 +22,18 @@ export const stopwatchesSlice = createSlice({
 				createWidget({ kind: WidgetKind.Stopwatch })
 			);
 		},
+		removeStopwatch: {
+			reducer(state, { payload: id }: PayloadAction<string>) {
+				remove(state.widgets, widget => widget.id === id);
+			},
+			prepare(id: string) {
+				return { payload: id };
+			}
+		}
 	}
 });
 
 export default stopwatchesSlice.reducer;
-export const {addStopwatch} = stopwatchesSlice.actions;
+export const {addStopwatch, removeStopwatch} = stopwatchesSlice.actions;
 export const selectAllStopwatches = (state: RootState) => state.stopwatches.widgets;
 

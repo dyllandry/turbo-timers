@@ -17,7 +17,7 @@ function render() {
 
 function App() {
 	const stopwatches = useAppSelector(selectAllStopwatches);
-	const stopwatchComponents = stopwatches.map((_, index) => <Stopwatch key={index} />);
+	const stopwatchComponents = stopwatches.map(({ id }) => <Stopwatch key={id} />);
 	return (
 		<Fragment>
 			<h1>Turbo Timers</h1>

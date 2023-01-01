@@ -1,8 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {RootState} from "app/store";
-import { Widget, WidgetKind } from "features/widget/widget";
+import {  createWidget, Widget, WidgetKind } from "features/widget/widget";
 
-interface Stopwatch extends Widget {
+type Stopwatch = Widget & {
 	kind: WidgetKind.Stopwatch;
 }
 
@@ -17,8 +17,10 @@ export const stopwatchesSlice = createSlice({
 	initialState,
 	reducers: {
 		addStopwatch(state) {
-			state.widgets.push({ kind: WidgetKind.Stopwatch });
-		}
+			state.widgets.push(
+				createWidget({ kind: WidgetKind.Stopwatch })
+			);
+		},
 	}
 });
 

@@ -22,13 +22,8 @@ export const stopwatchesSlice = createSlice({
 				createWidget({ kind: WidgetKind.Stopwatch })
 			);
 		},
-		removeStopwatch: {
-			reducer(state, { payload: id }: PayloadAction<string>) {
-				remove(state.widgets, widget => widget.id === id);
-			},
-			prepare(id: string) {
-				return { payload: id };
-			}
+		removeStopwatch(state, { payload: id }: PayloadAction<string>) {
+			remove(state.widgets, widget => widget.id === id);
 		}
 	}
 });

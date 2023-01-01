@@ -1,7 +1,7 @@
 import {Fragment} from 'react';
 import {createRoot} from 'react-dom/client'
 import {useAppDispatch, useAppSelector} from 'app/hooks';
-import {addStopwatch, selectStopwatches} from 'features/stopwatch/stopwatchesSlice';
+import {addStopwatch, selectAllStopwatches} from 'features/stopwatch/stopwatchesSlice';
 import { store } from 'app/store';
 import {Provider} from 'react-redux';
 import {Stopwatch} from 'features/stopwatch/stopwatch';
@@ -16,7 +16,7 @@ function render() {
 }
 
 function App() {
-	const stopwatches = useAppSelector(selectStopwatches);
+	const stopwatches = useAppSelector(selectAllStopwatches);
 	const stopwatchComponents = stopwatches.map((_, index) => <Stopwatch key={index} />);
 	return (
 		<Fragment>

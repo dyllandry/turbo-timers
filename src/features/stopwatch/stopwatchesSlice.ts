@@ -63,15 +63,15 @@ type Session = {
  * and hydration isn't broken. Throws error if you try to store a date.
  * https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state
  */
-type DateTime = string;
+type DateTime = { kind: 'DateTime' } & string;
 
-const isDateString = (dateString: string): dateString is DateTime => {
-	// example: 2023-01-01T20:16:49.114Z
-	return moment(dateString, 'YYYY-MM-DDTHH-mm-ss.SSSZ').isValid();
+const isDateTime = (dateTime: string | DateTime): dateTime is DateTime => {
+	// example: "2023-01-01T20:16:49.114Z"
+	return moment(dateTime, 'YYYY-MM-DDTHH-mm-ss.SSSZ').isValid();
 }
 
-const throwIfNotDateString = (dateString: string): DateTime => {
-	if (!isDateString(dateString)) throw new Error(`string ${dateString} is not a valid DateString`);
+const throwIfNotDateString = (dateString: string | DateTime): DateTime => {
+	if (!isDateTime(dateString)) throw new Error(`string ${dateString} is not a valid DateTime`);
 	else return dateString;
 }
 
@@ -82,5 +82,5 @@ const createDateTime = (): DateTime => {
 
 interface StopwatchSliceState {
 	widgets: Stopwatch[]
-};
+}
 

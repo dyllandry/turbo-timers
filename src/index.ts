@@ -22,7 +22,7 @@ const createWindow = (): void => {
 	});
 
 	// and load the index.html of the app.
-	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+	void mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
 	// Open the DevTools.
 	mainWindow.webContents.openDevTools();
@@ -31,13 +31,19 @@ const createWindow = (): void => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
-	let extensionName = await electronDevtoolsInstaller(REACT_DEVELOPER_TOOLS);
-	console.log(`Added Extension:  ${extensionName}`);
-	// There's a bug involving the Redux extension where after a hot reload the redux panel says "No store found".
-	extensionName = await electronDevtoolsInstaller(REDUX_DEVTOOLS);
-	console.log(`Added Extension:  ${extensionName}`);
-	createWindow();
+app.on('ready', () => {
+	const createWindowWithExtensions = async () => {
+		let extensionName = await electronDevtoolsInstaller(REACT_DEVELOPER_TOOLS);
+		console.log(`Added Extension:  ${extensionName}`);
+		// There's a bug involving the Redux extension where after a hot reload the redux panel says "No store found".
+		extensionName = await electronDevtoolsInstaller(REDUX_DEVTOOLS);
+		console.log(`Added Extension:  ${extensionName}`);
+		createWindow();
+	}
+	createWindowWithExtensions().catch((error: Error) => {
+		console.log('could not create window with extensions');
+		throw error;
+	});
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

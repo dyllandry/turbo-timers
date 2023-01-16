@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { removeStopwatch, selectStopwatchCurrentSessionDuration, selectStopwatchIsRunning, selectStopwatchTotalDuration, startStopwatch, stopStopwatch } from "features/stopwatch/stopwatchesSlice";
+import { DurationMs, removeStopwatch, selectStopwatchCurrentSessionDuration, selectStopwatchIsRunning, selectStopwatchTotalDuration, startStopwatch, stopStopwatch } from "features/stopwatch/stopwatchesSlice";
+import moment from "moment";
 import { useState } from "react";
 
 export const Stopwatch = ({ id }: { id: string }) => {
@@ -26,8 +27,8 @@ export const Stopwatch = ({ id }: { id: string }) => {
 
 	return (
 		<div>
-			<div>Total Duration: {totalDuration}</div>
-			<div>Current Session Duration: {currentSessionDuration}</div>
+			<div>Total: {formatDuration(totalDuration)}</div>
+			<div>Current Session: {formatDuration(currentSessionDuration)}</div>
 			<button onClick={onClickRemove}>x</button>
 			<ToggleStartButton isRunning={isRunning} onClick={onClickToggleStart} />
 		</div>
@@ -42,4 +43,15 @@ const ToggleStartButton = (
 	return (
 		<button onClick={onClick}>{label}</button>
 	);
+}
+
+const formatDuration = (duration: DurationMs) => {
+	const momentDuration = moment.duration(duration);
+	const hours = momentDuration.hours();
+	const minutes = momentDuration.minutes();
+	const seconds = momentDuration.seconds();
+	const formattedHours = hours < 10 ? '0' + hours.toString() : hours;
+	const formattedMinutes = minutes < 10 ? '0' + minutes.toString() : minutes;
+	const formattedSeconds = seconds < 10 ? '0' + seconds.toString() : seconds;
+	return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }

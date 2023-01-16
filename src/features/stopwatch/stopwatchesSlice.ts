@@ -94,7 +94,7 @@ const isDateTime = (dateTime: string | DateTime): dateTime is DateTime => {
 	return moment(dateTime, 'YYYY-MM-DDTHH-mm-ss.SSSZ').isValid();
 }
 
-type DurationMs = { kind: 'DurationMs' } & number;
+export type DurationMs = { kind: 'DurationMs' } & number;
 
 const throwIfNotDateString = (dateString: string | DateTime): DateTime => {
 	if (!isDateTime(dateString)) throw new Error(`string ${dateString} is not a valid DateTime`);

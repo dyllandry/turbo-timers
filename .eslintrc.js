@@ -4,28 +4,21 @@ module.exports = {
     "es6": true,
     "node": true
   },
-  settings: {
-    "import/resolver": {
-      typescript: {
-        project: "tsconfig.json"
-      }
-    }
-  },
+  // Enables ESLint to parse TypeScript code
   parser: "@typescript-eslint/parser",
   parserOptions: {
+    // Required for rules in @typescript-eslint/recommended-requiring-type-checking
+    // https://typescript-eslint.io/linting/typed-linting/
     project: "./tsconfig.json",
     tsconfigRootDir: "./"
   },
   plugins: [
+    // Load package @typescript-eslint as a plugin. Enables typescript-eslint's rules.
     "@typescript-eslint",
-    "import"
   ],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:import/recommended",
-    "plugin:import/electron",
-    "plugin:import/typescript"
   ]
 }

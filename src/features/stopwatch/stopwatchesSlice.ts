@@ -57,6 +57,17 @@ export const selectStopwatchCurrentSessionDuration = (state: RootState, id: stri
 	if (!stopwatch) return 0 as DurationMs;
 	const session = stopwatch.sessions[stopwatch.sessions.length - 1];
 	if (!session) return 0 as DurationMs;
+	return sessionDuration(session);
+}
+
+export const selectStopwatchTotalDuration = (state: RootState, id: string): DurationMs => {
+	const stopwatch = state.stopwatches.widgets.find(w => w.id === id);
+	if (!stopwatch) return 0 as DurationMs;
+	const totalDuration = stopwatch.sessions.reduce((total, session) => total + sessionDuration(session), 0) as DurationMs;
+	return totalDuration;
+}
+
+const sessionDuration = (session: Session): DurationMs => {
 	const durationMs = moment(session.end).diff(session.start, 'milliseconds');
 	return durationMs as DurationMs;
 }

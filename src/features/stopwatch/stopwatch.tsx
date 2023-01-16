@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { removeStopwatch, selectStopwatchCurrentSessionDuration, selectStopwatchIsRunning, startStopwatch, stopStopwatch } from "features/stopwatch/stopwatchesSlice";
+import { removeStopwatch, selectStopwatchCurrentSessionDuration, selectStopwatchIsRunning, selectStopwatchTotalDuration, startStopwatch, stopStopwatch } from "features/stopwatch/stopwatchesSlice";
 import { useState } from "react";
 
 export const Stopwatch = ({ id }: { id: string }) => {
 	const isRunning = useAppSelector((state) => selectStopwatchIsRunning(state, id));
 	const currentSessionDuration = useAppSelector((state) => selectStopwatchCurrentSessionDuration(state, id));
+	const totalDuration = useAppSelector((state) => selectStopwatchTotalDuration(state, id));
 
 	// This is how I get the component to rerender every second despite stopwatch state in redux not changing.
 	// Timeout calls function that modifies a bit of component state, which is the timeout id itself.
@@ -25,6 +26,7 @@ export const Stopwatch = ({ id }: { id: string }) => {
 
 	return (
 		<div>
+			<div>Total Duration: {totalDuration}</div>
 			<div>Current Session Duration: {currentSessionDuration}</div>
 			<button onClick={onClickRemove}>x</button>
 			<ToggleStartButton isRunning={isRunning} onClick={onClickToggleStart} />

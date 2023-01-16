@@ -17,7 +17,8 @@
 				"node_modules/*"
 			]
 		},
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"strict": true
 	},
 	"include": [
 		"src/**/*"

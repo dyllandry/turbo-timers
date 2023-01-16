@@ -20,12 +20,15 @@ export const stopwatchesSlice = createSlice({
 		},
 		startStopwatch(state, { payload: id }: PayloadAction<string>) {
 			const stopwatch = state.widgets.find(w => w.id === id);
+			if (!stopwatch) return;
 			stopwatch.sessions.push({ start: createDateTime() });
 		},
 		stopStopwatch(state, { payload: id }: PayloadAction<string>) {
 			const stopwatch = state.widgets.find(w => w.id === id);
-			const session = stopwatch.sessions[stopwatch.sessions.length - 1];
-			if (session != null) session.end = createDateTime();
+			if (!stopwatch) return;
+			const latestSession = stopwatch.sessions[stopwatch.sessions.length - 1];
+			if (!latestSession) return;
+			latestSession.end = createDateTime();
 		},
 	}
 });
@@ -43,9 +46,10 @@ export const selectAllStopwatches = (state: RootState) => state.stopwatches.widg
 
 export const selectStopwatchIsRunning = (state: RootState, id: string): boolean => {
 	const stopwatch = state.stopwatches.widgets.find(w => w.id === id);
+	if (!stopwatch) return false;
 	const session = stopwatch.sessions[stopwatch.sessions.length - 1];
-	if (session == null) return false;
-	else return session.end == null;
+	if (!session) return false;
+	return session.end == null;
 }
 
 type Stopwatch = Widget & {

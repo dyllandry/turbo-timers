@@ -29,7 +29,7 @@ export const Stopwatch = ({ id }: { id: string }) => {
 		<div>
 			<div>Total: {formatDuration(totalDuration)}</div>
 			<div>Current Session: {formatDuration(currentSessionDuration)}</div>
-			<button onClick={onClickRemove}>x</button>
+			<button onClick={onClickRemove} style={{ marginRight: 24 }}>x</button>
 			<ToggleStartButton isRunning={isRunning} onClick={onClickToggleStart} />
 		</div>
 	);

@@ -19,8 +19,8 @@ function render() {
 function App() {
 	const stopwatches = useAppSelector(selectAllStopwatches);
 	const stopwatchComponents = stopwatches.map(({ id }) =>
-		<div style={{ marginBottom: 24 }}>
-			<Stopwatch key={id} id={id} />
+		<div key={id} style={{ marginBottom: 24 }}>
+			<Stopwatch id={id} />
 		</div>
 	);
 	return (

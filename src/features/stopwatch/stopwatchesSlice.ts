@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { createWidget, Widget, WidgetKind } from "features/widget/widget";
+import { createWidget, selectWidgetName, setWidgetName, Widget, WidgetKind } from "features/widget/widget";
 import remove from 'lodash/remove';
 import moment from 'moment';
 
@@ -12,7 +12,7 @@ export const stopwatchesSlice = createSlice({
 	reducers: {
 		addStopwatch(state) {
 			state.widgets.push(
-				createWidget({ kind: WidgetKind.Stopwatch, sessions: [] })
+				createWidget({ kind: WidgetKind.Stopwatch, sessions: [], name: "my stopwatch" })
 			);
 		},
 		removeStopwatch(state, { payload: id }: PayloadAction<string>) {
@@ -30,6 +30,9 @@ export const stopwatchesSlice = createSlice({
 			if (!latestSession) return;
 			latestSession.end = createDateTime();
 		},
+		setStopwatchName(state, { payload: { id, name } }: PayloadAction<{ id: string, name: string | null }>) {
+			setWidgetName(state.widgets, id, name);
+		}
 	}
 });
 
@@ -39,7 +42,8 @@ export const {
 	addStopwatch,
 	removeStopwatch,
 	startStopwatch,
-	stopStopwatch
+	stopStopwatch,
+	setStopwatchName
 } = stopwatchesSlice.actions;
 
 export const selectAllStopwatches = (state: RootState) => state.stopwatches.widgets;
@@ -65,6 +69,10 @@ export const selectStopwatchTotalDuration = (state: RootState, id: string): Dura
 	if (!stopwatch) return 0 as DurationMs;
 	const totalDuration = stopwatch.sessions.reduce((total, session) => total + sessionDuration(session), 0) as DurationMs;
 	return totalDuration;
+}
+
+export const selectStopwatchName = (state: RootState, id: string): ReturnType<typeof selectWidgetName> => {
+	return selectWidgetName(state.stopwatches.widgets, id);
 }
 
 const sessionDuration = (session: Session): DurationMs => {

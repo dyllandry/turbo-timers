@@ -32,6 +32,11 @@ export const stopwatchesSlice = createSlice({
 		},
 		setStopwatchName(state, { payload: { id, name } }: PayloadAction<{ id: string, name: string | null }>) {
 			setWidgetName(state.widgets, id, name);
+		},
+		resetStopwatch(state, { payload: id }: PayloadAction<string>) {
+			const stopwatch = state.widgets.find(w => w.id === id);
+			if (!stopwatch) return;
+			stopwatch.sessions = [];
 		}
 	}
 });
@@ -43,7 +48,8 @@ export const {
 	removeStopwatch,
 	startStopwatch,
 	stopStopwatch,
-	setStopwatchName
+	setStopwatchName,
+	resetStopwatch
 } = stopwatchesSlice.actions;
 
 export const selectAllStopwatches = (state: RootState) => state.stopwatches.widgets;

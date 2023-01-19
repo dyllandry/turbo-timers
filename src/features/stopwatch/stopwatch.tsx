@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { DurationMs, removeStopwatch, selectStopwatchCurrentSessionDuration, selectStopwatchIsRunning, selectStopwatchName, selectStopwatchTotalDuration, setStopwatchName, startStopwatch, stopStopwatch } from "features/stopwatch/stopwatchesSlice";
+import { DurationMs, removeStopwatch, resetStopwatch, selectStopwatchCurrentSessionDuration, selectStopwatchIsRunning, selectStopwatchName, selectStopwatchTotalDuration, setStopwatchName, startStopwatch, stopStopwatch } from "features/stopwatch/stopwatchesSlice";
 import moment from "moment";
 import React, { useState } from "react";
 
@@ -15,7 +15,18 @@ export const Stopwatch = ({ id }: { id: string }) => {
 	const startRerenderTimeout = (): void => setRerenderTimeoutId(setTimeout(startRerenderTimeout, 1000));
 
 	const dispatch = useAppDispatch();
-	const onClickRemove = () => dispatch(removeStopwatch(id));
+	const onClickRemove = () => {
+		const formattedStopwatchName = name ? `${name} ` : '';
+		if (confirm(`Are you sure you want to delete the ${formattedStopwatchName}stopwatch?`)) {
+			dispatch(removeStopwatch(id));
+		}
+	}
+	const onClickReset = () => {
+		const formattedStopwatchName = name ? `${name} ` : '';
+		if (confirm(`Are you sure you want to reset the ${formattedStopwatchName}stopwatch?`)) {
+			dispatch(resetStopwatch(id));
+		}
+	}
 	const onClickToggleStart = () => {
 		if (rerenderTimeoutId) clearTimeout(rerenderTimeoutId);
 		if (isRunning) {
@@ -32,11 +43,14 @@ export const Stopwatch = ({ id }: { id: string }) => {
 
 	return (
 		<div>
-			<input type="text" value={name ?? ''} placeholder="Stopwatch name" onChange={handleNameInputOnChange}/>
+			<input type="text" value={name ?? ''} placeholder="Stopwatch name" onChange={handleNameInputOnChange} />
 			<div>Total: {formatDuration(totalDuration)}</div>
 			<div>Current Session: {formatDuration(currentSessionDuration)}</div>
-			<button onClick={onClickRemove} style={{ marginRight: 24 }}>x</button>
-			<ToggleStartButton isRunning={isRunning} onClick={onClickToggleStart} />
+			<span style={{ marginRight: 24 }}>
+				<ToggleStartButton isRunning={isRunning} onClick={onClickToggleStart} />
+			</span>
+			<button onClick={onClickReset} style={{ marginRight: 24 }}>Reset</button>
+			<button onClick={onClickRemove}>Delete</button>
 		</div>
 	);
 }

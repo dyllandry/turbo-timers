@@ -41,8 +41,22 @@ export const Stopwatch = ({ id }: { id: string }) => {
 		dispatch(setStopwatchName({ id, name }));
 	}
 
+	const defaultStyle: React.CSSProperties = {
+		padding: 8,
+	}
+	const isRunningStyle: React.CSSProperties = {
+		border: '2px green',
+		borderStyle: 'dashed',
+		borderRadius: 12,
+		padding: 6,
+	}
+	const stopwatchStyle: React.CSSProperties = {
+		...defaultStyle,
+		...(isRunning ? isRunningStyle : {})
+	}
+
 	return (
-		<div>
+		<div style={stopwatchStyle}>
 			<input type="text" value={name ?? ''} placeholder="Stopwatch name" onChange={handleNameInputOnChange} />
 			<div>Total: {formatDuration(totalDuration)}</div>
 			<div>Current Session: {formatDuration(currentSessionDuration)}</div>

@@ -5,5 +5,6 @@
 - [x] make stopwatch store a session (@done 2023-01-01)
 - [x] display current session and total session time in ui
 - [x] set name of stopwatch
-- [ ] allow resetting timer
-- [ ] confirm before deleting or restting timer
+- [x] allow resetting timer
+- [x] confirm before deleting or reseting timer
+- [x] add easy way of telling that stopwatch is running

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
+import { createDateTime, DurationMs, Session } from "features/session/session";
 import { createWidget, selectWidgetName, setWidgetName, Widget, WidgetKind } from "features/widget/widget";
 import remove from 'lodash/remove';
 import moment from 'moment';
@@ -12,7 +13,7 @@ export const stopwatchesSlice = createSlice({
 	reducers: {
 		addStopwatch(state) {
 			state.widgets.push(
-				createWidget({ kind: WidgetKind.Stopwatch, sessions: [], name: "my stopwatch" })
+				createWidget({ kind: WidgetKind.Stopwatch, sessions: [] })
 			);
 		},
 		removeStopwatch(state, { payload: id }: PayloadAction<string>) {
@@ -89,35 +90,6 @@ const sessionDuration = (session: Session): DurationMs => {
 type Stopwatch = Widget & {
 	kind: WidgetKind.Stopwatch;
 	sessions: Session[]
-}
-
-type Session = {
-	start: DateTime;
-	end?: DateTime;
-}
-
-/**
- * Used string as the type for storing dates in redux in a serializable form so store peristance
- * and hydration isn't broken. Throws error if you try to store a Date type.
- * https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state
- */
-type DateTime = { kind: 'DateTime' } & string;
-
-const isDateTime = (dateTime: string | DateTime): dateTime is DateTime => {
-	// example: "2023-01-01T20:16:49.114Z"
-	return moment(dateTime, 'YYYY-MM-DDTHH-mm-ss.SSSZ').isValid();
-}
-
-export type DurationMs = { kind: 'DurationMs' } & number;
-
-const throwIfNotDateString = (dateString: string | DateTime): DateTime => {
-	if (!isDateTime(dateString)) throw new Error(`string ${dateString} is not a valid DateTime`);
-	else return dateString;
-}
-
-const createDateTime = (): DateTime => {
-	const dateString = throwIfNotDateString(new Date().toISOString());
-	return dateString;
 }
 
 interface StopwatchSliceState {

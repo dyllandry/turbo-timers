@@ -5,6 +5,8 @@ import { addStopwatch, selectAllStopwatches } from 'features/stopwatch/stopwatch
 import { store } from 'app/store';
 import { Provider } from 'react-redux';
 import { Stopwatch } from 'features/stopwatch/stopwatch';
+import { addTimer, selectAllTimers } from 'features/timer/timersSlice';
+import { Timer } from 'features/timer/timer';
 
 function render() {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -23,13 +25,21 @@ function App() {
 			<Stopwatch id={id} />
 		</div>
 	);
+	const timers = useAppSelector(selectAllTimers);
+	const timerComponents = timers.map(({ id }) =>
+		<div key={id} style={{ marginBottom: 24 }}>
+			<Timer id={id} />
+		</div>
+	);
 	return (
 		<Fragment>
 			<h1>Turbo Timers</h1>
 			<div style={{ marginBottom: 24 }}>
 				<CreateStopwatchButton />
+				<CreateTimerButton />
 			</div>
 			{stopwatchComponents}
+			{timerComponents}
 		</Fragment>
 	);
 }
@@ -40,6 +50,14 @@ function CreateStopwatchButton() {
 		dispatch(addStopwatch());
 	};
 	return <button onClick={onClick}>Create Stopwatch</button>;
+}
+
+function CreateTimerButton() {
+	const dispatch = useAppDispatch();
+	const onClick = () => {
+		dispatch(addTimer());
+	};
+	return <button onClick={onClick}>Create Timer</button>;
 }
 
 render();

@@ -15,8 +15,8 @@ export enum WidgetKind {
 /**
  * Creates a widget and adds general widget properties like a unique id.
  */
-export const createWidget = <T extends Omit<Widget, 'id'>>(base: T): Widget & T => {
-	return { ...base, id: getId(), name: null };
+export const createWidget = <T extends Omit<Widget, 'id' | 'name'>>(base: T): Widget & T => {
+	return { name: null, id: getId(), ...base, };
 }
 
 export const selectWidgetName = (widgets: Widget[], id: string): string | null => {

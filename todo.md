@@ -8,3 +8,6 @@
 - [x] allow resetting timer
 - [x] confirm before deleting or reseting timer
 - [x] add easy way of telling that stopwatch is running
+- [ ] add timer widget type
+- [ ] show widgets ascending order by when they were created
+

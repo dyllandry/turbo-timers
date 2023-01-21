@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { DurationMs, removeStopwatch, resetStopwatch, selectStopwatchCurrentSessionDuration, selectStopwatchIsRunning, selectStopwatchName, selectStopwatchTotalDuration, setStopwatchName, startStopwatch, stopStopwatch } from "features/stopwatch/stopwatchesSlice";
+import { DurationMs } from "features/session/session";
+import { removeStopwatch, resetStopwatch, selectStopwatchCurrentSessionDuration, selectStopwatchIsRunning, selectStopwatchName, selectStopwatchTotalDuration, setStopwatchName, startStopwatch, stopStopwatch } from "features/stopwatch/stopwatchesSlice";
 import moment from "moment";
 import React, { useState } from "react";
 
